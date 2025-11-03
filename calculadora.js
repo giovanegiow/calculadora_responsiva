@@ -24,25 +24,25 @@ function insereDigitoInput(botao){
 }
 
 function realizaCalculo() {
-    let calculoOperacao = trataCalculo(document.getElementById("resultadoCalculadora").value);
+    try {
+        let calculoOperacao = trataCalculo(document.getElementById("resultadoCalculadora").value);
 
-    let resultado = trataResultado(calculoOperacao.toFixed(2));
+        let resultado = trataResultado(calculoOperacao.toFixed(2));
 
-    adicionarOperacaoHistorico(document.getElementById("resultadoCalculadora").value, resultado);
+        adicionarOperacaoHistorico(document.getElementById("resultadoCalculadora").value, resultado);
 
-    document.getElementById("resultadoCalculadora").value = resultado;
+        document.getElementById("resultadoCalculadora").value = resultado;
+    } catch {
+        document.getElementById("resultadoCalculadora").value = "Operação inválida!";
+    }
 }
 
 function trataCalculo(valorOperacao) {
-    try {
-        if (valorOperacao.includes("x")) valorOperacao = valorOperacao.replaceAll("x", "*");
+    if (valorOperacao.includes("x")) valorOperacao = valorOperacao.replaceAll("x", "*");
 
-        if (valorOperacao.includes(",")) valorOperacao = valorOperacao.replaceAll(",", ".");
+    if (valorOperacao.includes(",")) valorOperacao = valorOperacao.replaceAll(",", ".");
 
-        return evaluate(valorOperacao);
-    } catch {
-        return "Operação inválida!";
-    }
+    return evaluate(valorOperacao);
 }
 
 function trataResultado(resultadoOperacao) {
